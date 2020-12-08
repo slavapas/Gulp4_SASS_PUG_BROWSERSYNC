@@ -29,9 +29,9 @@ gulp.task('pug', function(callback) {
 	callback();
 });
 
-// Таск для компиляции SCSS в CSS
-gulp.task('scss', function(callback) {
-	return gulp.src('./src/scss/main.scss')
+// Таск для компиляции sass в CSS
+gulp.task('sass', function(callback) {
+	return gulp.src('./src/sass/main.sass')
 		.pipe( plumber({
 			errorHandler: notify.onError(function(err){
 				return {
@@ -72,9 +72,9 @@ gulp.task('watch', function() {
 	// Следим за картинками и скриптами и обновляем браузер
 	watch( ['./build/js/**/*.*', './build/img/**/*.*'], gulp.parallel(browserSync.reload) );
 
-	// Запуск слежения и компиляции SCSS с задержкой
-	watch('./src/scss/**/*.scss', function(){
-		setTimeout( gulp.parallel('scss'), 500 )
+	// Запуск слежения и компиляции sass с задержкой
+	watch('./src/sass/**/*.sass', function(){
+		setTimeout( gulp.parallel('sass'), 500 )
 	})
 
 	// Слежение за PUG и сборка
@@ -105,7 +105,7 @@ gulp.task(
 		'default', 
 		gulp.series( 
 			gulp.parallel('clean:build'),
-			gulp.parallel('scss', 'pug', 'copy:img', 'copy:js'), 
+			gulp.parallel('sass', 'pug', 'copy:img', 'copy:js'), 
 			gulp.parallel('server', 'watch'), 
 			)
 	);
